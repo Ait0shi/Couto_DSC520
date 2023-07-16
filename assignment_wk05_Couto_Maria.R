@@ -106,7 +106,6 @@ housing_concat <- housing_split %>%
 
 housing_concat %>% select(sale_date,sale_price,addr_full)
 
-
 housing_concat2 <- housing_split2 %>%
   mutate(addr_full2 = map(add_split, ~str_c(.x,collapse = " ")))
 
