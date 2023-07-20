@@ -1,0 +1,134 @@
+---
+title: "Couto_Assignment_04_02"
+author: "Mcouto"
+date: "`r Sys.Date()`"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+bibliography: bibliography.bib
+---
+
+# Markdown Basics
+
+## Favorite Foods
+
+1. Sushi
+2. Desserts
+3. Filipino Cuisine
+
+## Images
+![All Cases (Log Plot)](C:/Users/ait0s/OneDrive/Documents/GitHub/dsc520/completed/assignment04/plots/10-all-cases-log.png)
+## Add a Quote
+
+>
+>  "If more of us valued food & cheer & song above hoarded gold,
+>  it would be a merrier world." - Thorin, Chapter 18
+
+
+## Add an Equation
+
+$$
+
+E = mc^2
+
+$$
+
+## Add a Footnote
+
+^[This is a footnote.]
+
+## Add Citations
+
+* R for Everyone 
+@lander2014r
+
+* Discovering Statistics Using R
+@field2012discovering
+
+# Inline Code
+```{r include= FALSE, warning = FALSE}
+library(ggplot2)
+theme_set(theme_minimal())
+setwd("C:/Users/ait0s/OneDrive/Documents/GitHub/dsc520")
+
+
+heights_df <- read.csv("data/r4ds/heights.csv")
+summary(heights_df)
+
+covid_df <- read.csv("data/nytimes/covid-19-data/us-states.csv")
+summary(covid_df)
+
+california_df <- covid_df[ which( covid_df$state == "California"), ]
+summary(california_df)
+
+ny_df <- covid_df[ which( covid_df$state == "New York"), ]
+summary(ny_df)
+
+florida_df <- covid_df[ which( covid_df$state == "Florida"), ]
+summary(florida_df)
+```
+
+## NY Times COVID-19 Data
+```{r echo = FALSE, warning=FALSE}
+
+library(ggplot2)
+ggplot(data=florida_df, aes(x=date, group=1)) +
+  geom_line(aes(y = cases, colour = "Florida")) +
+  geom_line(data=ny_df, aes(y = cases,colour="New York")) +
+  geom_line(data=california_df, aes(y = cases, colour="California")) +
+  scale_colour_manual("",
+                      breaks = c("Florida", "New York", "California"),
+                      values = c("darkred", "darkgreen", "steelblue")) +
+  xlab(" ") + ylab("Cases") + scale_y_log10()
+  
+```
+
+## R4DS Height vs Earnings
+```{r echo = FALSE, warning=FALSE}
+library(ggplot2)
+theme_set(theme_minimal())
+setwd("C:/Users/ait0s/OneDrive/Documents/GitHub/dsc520")
+
+
+heights_df <- read.csv("data/r4ds/heights.csv")
+ggplot(heights_df, aes(x=height, y=earn, col=sex)) + geom_point() + ggtitle("Height vs. Earnings") + xlab("Height (Inches)") + ylab("Earnings (Dollars)")
+
+```
+
+
+
+# Tables
+
+## Knitr Table with Kable
+```{r echo = FALSE, warning = FALSE}
+options(kableExtra.auto_format = FALSE)
+options(knitr.table.format = 'markdown')
+name <- c("Aragon", "Bilbo", "Frodo", "Galadriel", "Sam", "Gandalf", 
+          "Legolas", "Sauron", "Gollum")
+race <- c("Men", "Hobbit", "Hobbit", "Elf", "Hobbit", "Maia", 
+          "Elf", "Maia", "Hobbit")
+in_fellowship <- c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE)
+ring_bearer <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, TRUE)
+age <- c(88, 129, 51, 7000, 36, 2019, 2931, 7052, 589)
+
+characters_df <- data.frame(name, race, in_fellowship, ring_bearer, age)
+knitr::kable(characters_df[, 1:5], caption = "One Ring to Rule Them All")
+```
+
+## Pandoc Table
+
+```{r echo = FALSE, warning = FALSE, comment = NA}
+name <- c("Aragon", "Bilbo", "Frodo", "Sam", "Sauron")
+race <- c("Men", "Hobbit", "Hobbit", "Hobbit", "Maia")
+in_fellowship <- c("Yes", "No", "Yes", "Yes", "No")
+ring_bearer <- c("No", "Yes", "Yes", "Yes", "Yes")
+age <- c(88, 129, 51, 36, 7052)
+characters_df <- data.frame(name, race, in_fellowship, ring_bearer, age)
+pander::pandoc.table(characters_df, col.names = c("Name", "Race", 
+                                  "In Fellowship?", "Is Ring Bearer?", "Age"), 
+                     justify = c('llllr'), style = "simple", 
+                     keep.line.breaks = TRUE, 
+                     caption = "One Ring to Rule Them All")
+```
+# References
