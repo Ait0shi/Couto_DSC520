@@ -4,7 +4,7 @@
 
 library(ggplot2)
 theme_set(theme_minimal())
-setwd("C:/Users/ait0s/OneDrive/Documents/GitHub/dsc520")
+setwd("C:/Users/ait0s/OneDrive/Documents/GitHub/Couto_DSC520")
 heights_df <- read.csv("data/r4ds/heights.csv")
 summary(heights_df)
 
@@ -64,8 +64,7 @@ covid_df$date <- as.Date(covid_df$date)
 
 # Create three dataframes named `california_df`, `ny_df`, and `florida_df`
 # containing the data from California, New York, and Florida
-
-California
+# California
 
 california_df <- covid_df[ which( covid_df$state == "California"), ]
 
@@ -93,7 +92,7 @@ summary(florida_df)
 ggplot(data=florida_df, aes(x=date, y=cases, group=1)) + geom_line()
 
 
-Add lines for New York and California to the plot
+# Add lines for New York and California to the plot
 
 
 ggplot(data=florida_df, aes(x=date, group=1)) +
